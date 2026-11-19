@@ -1,1 +1,992 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JOVAN TOOLS | Premium File Studio</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --bg:#080d19;
+  --card:#111a2c;
+  --card2:#16233a;
+  --blue:#3b82f6;
+  --purple:#8b5cf6;
+  --text:#f8fafc;
+  --muted:#94a3b8;
+  --border:#24344d;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,Arial,sans-serif;
+}
+
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px 7%;
+  border-bottom:1px solid var(--border);
+  background:#080d19;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.logo{
+  font-size:23px;
+  font-weight:800;
+  letter-spacing:-1px;
+}
+.logo span{color:#60a5fa}
+
+.header-badge{
+  font-size:11px;
+  color:#a5b4fc;
+  border:1px solid #334155;
+  padding:8px 13px;
+  border-radius:30px;
+}
+
+.hero{
+  text-align:center;
+  padding:75px 20px 45px;
+}
+
+.hero-tag{
+  display:inline-block;
+  padding:8px 13px;
+  background:#14213a;
+  border:1px solid #263c5c;
+  color:#93c5fd;
+  border-radius:30px;
+  font-size:12px;
+  margin-bottom:20px;
+}
+
+.hero h1{
+  font-size:clamp(36px,6vw,68px);
+  line-height:1.12;
+  letter-spacing:-2.5px;
+  margin:0;
+  font-weight:800;
+}
+
+.gradient-text{
+  background:linear-gradient(90deg,#60a5fa,#a78bfa);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+  color:var(--muted);
+  max-width:580px;
+  margin:20px auto;
+  line-height:1.8;
+  font-size:15px;
+}
+
+.search-box{
+  max-width:530px;
+  margin:28px auto 0;
+}
+
+.search-box input{
+  width:100%;
+  padding:17px 20px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:#111a2c;
+  color:white;
+  outline:none;
+  font-size:14px;
+}
+
+.search-box input:focus{border-color:var(--blue)}
+
+.container{
+  max-width:1250px;
+  padding:20px;
+  margin:auto;
+}
+
+.section-header{
+  margin:28px 0 22px;
+}
+
+.section-header h2{
+  margin:0 0 9px;
+  font-size:24px;
+}
+
+.section-header p{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:17px;
+}
+
+.tool-card{
+  background:linear-gradient(145deg,#111a2c,#0d1423);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  transition:.25s;
+  cursor:pointer;
+}
+
+.tool-card:hover{
+  transform:translateY(-5px);
+  border-color:#3b82f6;
+  box-shadow:0 12px 35px #2563eb15;
+}
+
+.tool-icon{
+  width:49px;
+  height:49px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#1e3a8a,#4c1d95);
+  border-radius:14px;
+  font-size:23px;
+  margin-bottom:18px;
+}
+
+.tool-card h3{
+  font-size:15px;
+  margin:0 0 10px;
+}
+
+.tool-card p{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+  min-height:40px;
+  margin:0;
+}
+
+.tool-card button{
+  margin-top:18px;
+  width:100%;
+  background:#1d4ed8;
+  color:white;
+  border:0;
+  padding:11px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.tool-card button:hover{background:#2563eb}
+
+.empty-search{
+  display:none;
+  color:var(--muted);
+  text-align:center;
+  padding:30px;
+}
+
+footer{
+  margin-top:70px;
+  border-top:1px solid var(--border);
+  padding:35px 20px;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.footer-logo{
+  font-size:21px;
+  font-weight:800;
+  color:white;
+}
+.footer-logo span{color:#60a5fa}
+
+/* MODAL */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000b;
+  z-index:100;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+
+.modal-box{
+  width:100%;
+  max-width:550px;
+  max-height:90vh;
+  overflow:auto;
+  background:#111a2c;
+  border:1px solid #2a3b56;
+  border-radius:22px;
+  padding:25px;
+}
+
+.modal-top{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  align-items:center;
+}
+
+.modal-top h2{font-size:21px}
+
+.close-btn{
+  border:0;
+  background:#1e293b;
+  color:white;
+  font-size:21px;
+  border-radius:10px;
+  padding:8px 12px;
+  cursor:pointer;
+}
+
+.modal-description{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.7;
+}
+
+.upload-area{
+  border:2px dashed #344968;
+  border-radius:16px;
+  padding:28px 15px;
+  text-align:center;
+  margin:18px 0;
+  background:#0d1627;
+}
+
+.upload-area .upload-icon{font-size:35px}
+
+.upload-area p{
+  color:var(--muted);
+  font-size:13px;
+}
+
+input[type=file]{
+  max-width:100%;
+  color:#cbd5e1;
+  margin-top:12px;
+}
+
+.field{
+  width:100%;
+  background:#0b1424;
+  color:white;
+  border:1px solid #2a3b56;
+  border-radius:10px;
+  padding:12px;
+  margin:7px 0;
+}
+
+textarea.field{
+  resize:vertical;
+  min-height:140px;
+}
+
+.primary-btn{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:15px;
+  color:white;
+  font-weight:700;
+  background:linear-gradient(90deg,#2563eb,#7c3aed);
+  cursor:pointer;
+  margin-top:12px;
+}
+
+.primary-btn:disabled{
+  opacity:.5;
+  cursor:wait;
+}
+
+#status{
+  margin-top:15px;
+  font-size:13px;
+  line-height:1.6;
+  overflow-wrap:anywhere;
+}
+
+.download-link{
+  display:inline-block;
+  color:#93c5fd;
+  margin-top:10px;
+}
+
+.preview{
+  max-width:100%;
+  max-height:250px;
+  display:block;
+  margin:10px auto;
+  border-radius:10px;
+}
+
+@media(max-width:900px){
+  .grid{grid-template-columns:repeat(3,1fr)}
+}
+
+@media(max-width:600px){
+  header{padding:17px 5%}
+  .hero{padding:50px 18px 35px}
+  .hero h1{letter-spacing:-1.5px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .tool-card{padding:16px}
+  .container{padding:15px}
+  .tool-card p{min-height:55px}
+}
+
+@media(max-width:380px){
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">JOVAN <span>TOOLS</span></div>
+  <div class="header-badge">PDF & IMAGE STUDIO</div>
+</header>
+
+<section class="hero">
+  <div class="hero-tag">✦ All-in-One File Converter</div>
+  <h1>All your file tools.<br><span class="gradient-text">One simple place.</span></h1>
+  <p>Convert, merge, resize and manage your documents and images with simple tools.</p>
+
+  <div class="search-box">
+    <input id="searchInput" type="search" placeholder="🔍 Search tools..." oninput="searchTools()">
+  </div>
+</section>
+
+<main class="container">
+
+  <div class="section-header">
+    <h2>PDF & Document Tools</h2>
+    <p>Powerful tools for your documents.</p>
+  </div>
+
+  <div class="grid" id="pdfGrid"></div>
+
+  <div class="section-header" style="margin-top:55px">
+    <h2>Image Tools</h2>
+    <p>Resize and combine your images.</p>
+  </div>
+
+  <div class="grid" id="imageGrid"></div>
+
+  <div class="empty-search" id="emptySearch">
+    No tools found. Try another search.
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-logo">JOVAN <span>TOOLS</span></div>
+  <p>All your document tools in one place.</p>
+  <p>© 2026 JOVAN TOOLS</p>
+</footer>
+
+<!-- TOOL MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+
+    <div class="modal-top">
+      <h2 id="modalTitle">Tool</h2>
+      <button class="close-btn" onclick="closeModal()">✕</button>
+    </div>
+
+    <p class="modal-description" id="modalDescription"></p>
+
+    <div class="upload-area">
+      <div class="upload-icon">📁</div>
+      <p>Select or upload your file</p>
+      <input type="file" id="fileInput" multiple>
+    </div>
+
+    <div id="extraOptions"></div>
+
+    <button class="primary-btn" id="processBtn" onclick="processTool()">Process Files</button>
+    <div id="status"></div>
+
+  </div>
+</div>
+
+<!-- Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.12.0/pptxgen.bundle.js"></script>
+
+<script>
+if(window.pdfjsLib){
+ pdfjsLib.GlobalWorkerOptions.workerSrc =
+ 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
+const pdfTools = [
+ {name:"Image to PDF",icon:"🖼️",desc:"Convert multiple images into a single PDF.",type:"image-pdf"},
+ {name:"PDF to Image",icon:"📷",desc:"Convert PDF pages to PNG images.",type:"pdf-image"},
+ {name:"Text to PDF",icon:"📝",desc:"Create a PDF document from your text.",type:"text-pdf"},
+ {name:"PDF to Text",icon:"📄",desc:"Extract text from PDF documents.",type:"pdf-text"},
+ {name:"Word to PDF",icon:"📘",desc:"Convert DOCX documents into PDF.",type:"word-pdf"},
+ {name:"PDF to Word",icon:"📃",desc:"Extract PDF text into a Word document.",type:"pdf-word"},
+ {name:"PowerPoint to PDF",icon:"📊",desc:"Convert PPTX presentations to PDF.",type:"ppt-pdf"},
+ {name:"PDF to PowerPoint",icon:"📽️",desc:"Create PowerPoint slides from PDF pages.",type:"pdf-ppt"},
+ {name:"Merge PDF",icon:"🔗",desc:"Combine multiple PDF files into one.",type:"merge-pdf"},
+ {name:"PDF Resizer",icon:"↔️",desc:"Change the dimensions of PDF pages.",type:"pdf-resize"},
+ {name:"Compress PDF",icon:"🗜️",desc:"Try to reduce the PDF file size.",type:"compress-pdf"}
+];
+
+const imageTools = [
+ {name:"Image Resizer",icon:"📐",desc:"Resize images using custom pixel dimensions.",type:"image-resize"},
+ {name:"Merge Images",icon:"🧩",desc:"Combine multiple images into one image.",type:"merge-images"}
+];
+
+let activeTool=null;
+
+function createCard(tool){
+ const card=document.createElement("div");
+ card.className="tool-card";
+ card.dataset.search=tool.name.toLowerCase();
+
+ card.innerHTML=`
+   <div class="tool-icon">${tool.icon}</div>
+   <h3>${tool.name}</h3>
+   <p>${tool.desc}</p>
+   <button onclick="openTool('${tool.type}')">Open Tool →</button>
+ `;
+
+ return card;
+}
+
+pdfTools.forEach(t=>pdfGrid.appendChild(createCard(t)));
+imageTools.forEach(t=>imageGrid.appendChild(createCard(t)));
+
+function searchTools(){
+ const q=searchInput.value.toLowerCase().trim();
+ let count=0;
+
+ document.querySelectorAll(".tool-card").forEach(card=>{
+  const match=card.dataset.search.includes(q);
+  card.style.display=match?"":"none";
+  if(match)count++;
+ });
+
+ emptySearch.style.display=count===0?"block":"none";
+}
+
+function openTool(type){
+ activeTool=[...pdfTools,...imageTools].find(t=>t.type===type);
+ if(!activeTool)return;
+
+ modalTitle.textContent=activeTool.name;
+ modalDescription.textContent=activeTool.desc;
+ fileInput.value="";
+ status.innerHTML="";
+ extraOptions.innerHTML="";
+ modal.style.display="flex";
+
+ if(type==="text-pdf"){
+  extraOptions.innerHTML=`
+   <textarea id="textInput" class="field" placeholder="Write or paste your text here..."></textarea>
+   <input id="textTitle" class="field" placeholder="Document title (optional)">
+  `;
+ }
+
+ if(type==="image-resize"){
+  extraOptions.innerHTML=`
+   <input class="field" id="widthInput" type="number" placeholder="Width (pixels)">
+   <input class="field" id="heightInput" type="number" placeholder="Height (pixels)">
+   <label style="font-size:13px;color:#94a3b8">
+   <input type="checkbox" id="keepRatio" checked> Keep aspect ratio
+   </label>
+  `;
+ }
+
+ if(type==="pdf-resize"){
+  extraOptions.innerHTML=`
+   <select class="field" id="paperSize">
+    <option value="a4">A4</option>
+    <option value="letter">Letter</option>
+    <option value="a3">A3</option>
+    <option value="a5">A5</option>
+   </select>
+  `;
+ }
+
+ if(type==="merge-images"){
+  extraOptions.innerHTML=`
+   <select class="field" id="mergeDirection">
+    <option value="vertical">Merge vertically</option>
+    <option value="horizontal">Merge horizontally</option>
+   </select>
+  `;
+ }
+}
+
+function closeModal(){modal.style.display="none";}
+
+modal.addEventListener("click",e=>{
+ if(e.target===modal)closeModal();
+});
+
+function setStatus(msg){status.innerHTML=msg;}
+
+function downloadBlob(blob,name){
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;
+ a.download=name;
+ a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),30000);
+}
+
+function getFiles(){return Array.from(fileInput.files||[]);}
+
+async function processTool(){
+ if(!activeTool)return;
+
+ const btn=processBtn;
+ btn.disabled=true;
+ setStatus("Processing your files...");
+
+ try{
+  const files=getFiles();
+  const type=activeTool.type;
+
+  if(type!=="text-pdf"&&files.length===0){
+   throw new Error("Please select at least one file.");
+  }
+
+  switch(type){
+
+  case "image-pdf":
+   await imageToPDF(files);
+   break;
+
+  case "pdf-image":
+   await pdfToImages(files[0]);
+   break;
+
+  case "text-pdf":
+   await textToPDF();
+   break;
+
+  case "pdf-text":
+   await pdfToText(files[0]);
+   break;
+
+  case "merge-pdf":
+   await mergePDF(files);
+   break;
+
+  case "pdf-resize":
+   await resizePDF(files[0]);
+   break;
+
+  case "compress-pdf":
+   await compressPDF(files[0]);
+   break;
+
+  case "image-resize":
+   await resizeImage(files[0]);
+   break;
+
+  case "merge-images":
+   await mergeImages(files);
+   break;
+
+  case "word-pdf":
+   await wordToPDF(files[0]);
+   break;
+
+  case "pdf-word":
+   await pdfToWord(files[0]);
+   break;
+
+  case "ppt-pdf":
+   throw new Error("Browser-only PPTX to PDF conversion is not supported in this version.");
+
+  case "pdf-ppt":
+   await pdfToPPT(files[0]);
+   break;
+
+  default:
+   throw new Error("This tool is not available yet.");
+  }
+
+ }catch(err){
+  setStatus("❌ "+err.message);
+ }finally{
+  btn.disabled=false;
+ }
+}
+
+/* IMAGE TO PDF */
+
+async function imageToPDF(files){
+ const pdf=await PDFLib.PDFDocument.create();
+
+ for(const file of files){
+  const bytes=await file.arrayBuffer();
+  let img;
+
+  if(file.type==="image/jpeg"||file.type==="image/jpg"){
+   img=await pdf.embedJpg(bytes);
+  }else if(file.type==="image/png"){
+   img=await pdf.embedPng(bytes);
+  }else{
+   img=await embedOtherImage(bytes);
+  }
+
+  const page=pdf.addPage([img.width,img.height]);
+  page.drawImage(img,{x:0,y:0,width:img.width,height:img.height});
+ }
+
+ const out=await pdf.save();
+ downloadBlob(new Blob([out],{type:"application/pdf"}),"images.pdf");
+ setStatus("✅ PDF created successfully!");
+}
+
+async function embedOtherImage(bytes){
+ const canvas=document.createElement("canvas");
+ const img=new Image();
+
+ const url=URL.createObjectURL(new Blob([bytes]));
+ await new Promise((resolve,reject)=>{
+  img.onload=resolve;
+  img.onerror=reject;
+  img.src=url;
+ });
+
+ canvas.width=img.naturalWidth;
+ canvas.height=img.naturalHeight;
+ canvas.getContext("2d").drawImage(img,0,0);
+ URL.revokeObjectURL(url);
+
+ const png=await new Promise(r=>canvas.toBlob(r,"image/png"));
+ return PDFLib.PDFDocument.prototype.embedPng
+  ? await currentPDF.embedPng(await png.arrayBuffer())
+  : null;
+}
+
+/* PDF TO IMAGE */
+
+async function pdfToImages(file){
+ const pdf=await pdfjsLib.getDocument(await file.arrayBuffer()).promise;
+
+ for(let i=1;i<=pdf.numPages;i++){
+  const page=await pdf.getPage(i);
+  const viewport=page.getViewport({scale:2});
+  const canvas=document.createElement("canvas");
+  canvas.width=viewport.width;
+  canvas.height=viewport.height;
+
+  await page.render({canvasContext:canvas.getContext("2d"),viewport}).promise;
+
+  const blob=await new Promise(r=>canvas.toBlob(r,"image/png"));
+  downloadBlob(blob,`page-${i}.png`);
+ }
+
+ setStatus("✅ Images downloaded.");
+}
+
+/* TEXT TO PDF */
+
+async function textToPDF(){
+ const text=document.getElementById("textInput").value;
+ if(!text.trim())throw new Error("Please enter some text.");
+
+ const pdf=await PDFLib.PDFDocument.create();
+ const page=pdf.addPage();
+ const font=await pdf.embedFont(PDFLib.StandardFonts.Helvetica);
+ const size=12;
+ const margin=50;
+ const maxWidth=page.getWidth()-margin*2;
+
+ let y=page.getHeight()-margin;
+
+ const lines=wrapText(text,font,size,maxWidth);
+
+ for(const line of lines){
+  if(y<margin){
+   const newPage=pdf.addPage();
+   y=newPage.getHeight()-margin;
+   newPage.drawText(line,{x:margin,y,size,font});
+  }else{
+   page=pdf.getPages()[pdf.getPages().length-1];
+   page.drawText(line,{x:margin,y,size,font});
+  }
+  y-=18;
+ }
+
+ const out=await pdf.save();
+ downloadBlob(new Blob([out],{type:"application/pdf"}), "text.pdf");
+ setStatus("✅ PDF created.");
+}
+
+function wrapText(text,font,size,maxWidth){
+ const result=[];
+ text.split(/\r?\n/).forEach(par=>{
+  if(!par){result.push("");return;}
+  let line="";
+  par.split(/\s+/).forEach(word=>{
+   const test=line?line+" "+word:word;
+   if(font.widthOfTextAtSize(test,size)>maxWidth&&line){
+    result.push(line);
+    line=word;
+   }else line=test;
+  });
+  if(line)result.push(line);
+ });
+ return result;
+}
+
+/* PDF TO TEXT */
+
+async function pdfToText(file){
+ const pdf=await pdfjsLib.getDocument(await file.arrayBuffer()).promise;
+ let text="";
+
+ for(let i=1;i<=pdf.numPages;i++){
+  const page=await pdf.getPage(i);
+  const content=await page.getTextContent();
+  text+=content.items.map(x=>x.str).join(" ")+"\n\n";
+ }
+
+ downloadBlob(new Blob([text],{type:"text/plain"}),"extracted.txt");
+ setStatus("✅ Text extracted.");
+}
+
+/* MERGE PDF */
+
+async function mergePDF(files){
+ const merged=await PDFLib.PDFDocument.create();
+
+ for(const file of files){
+  const pdf=await PDFLib.PDFDocument.load(await file.arrayBuffer());
+  const pages=await merged.copyPages(pdf,pdf.getPageIndices());
+  pages.forEach(p=>merged.addPage(p));
+ }
+
+ const out=await merged.save();
+ downloadBlob(new Blob([out],{type:"application/pdf"}),"merged.pdf");
+ setStatus("✅ PDFs merged.");
+}
+
+/* RESIZE PDF */
+
+async function resizePDF(file){
+ const pdf=await PDFLib.PDFDocument.load(await file.arrayBuffer());
+ let w,h;
+
+ switch(paperSize.value){
+  case "a3":w=841.89;h=1190.55;break;
+  case "a5":w=419.53;h=595.28;break;
+  case "letter":w=612;h=792;break;
+  default:w=595.28;h=841.89;
+ }
+
+ pdf.getPages().forEach(page=>page.setSize(w,h));
+
+ const out=await pdf.save();
+ downloadBlob(new Blob([out],{type:"application/pdf"}),"resized.pdf");
+ setStatus("✅ PDF page size changed.");
+}
+
+/* COMPRESS PDF */
+
+async function compressPDF(file){
+ const pdf=await PDFLib.PDFDocument.load(await file.arrayBuffer());
+ const out=await pdf.save({useObjectStreams:true});
+ downloadBlob(new Blob([out],{type:"application/pdf"}),"compressed.pdf");
+ setStatus("PDF re-saved. Some PDFs may not become smaller.");
+}
+
+/* IMAGE RESIZE */
+
+async function resizeImage(file){
+ const img=await loadImage(file);
+ let w=parseInt(widthInput.value);
+ let h=parseInt(heightInput.value);
+
+ if(!w||!h)throw new Error("Enter width and height.");
+
+ if(keepRatio.checked){
+  const ratio=img.width/img.height;
+  if(w/h>ratio)w=Math.round(h*ratio);
+  else h=Math.round(w/ratio);
+ }
+
+ const canvas=document.createElement("canvas");
+ canvas.width=w;
+ canvas.height=h;
+ canvas.getContext("2d").drawImage(img,0,0,w,h);
+
+ const blob=await new Promise(r=>canvas.toBlob(r,"image/png"));
+ downloadBlob(blob,"resized-image.png");
+ setStatus("✅ Image resized.");
+}
+
+function loadImage(file){
+ return new Promise((resolve,reject)=>{
+  const img=new Image();
+  img.onload=()=>resolve(img);
+  img.onerror=reject;
+  img.src=URL.createObjectURL(file);
+ });
+}
+
+/* MERGE IMAGES */
+
+async function mergeImages(files){
+ if(files.length<2)throw new Error("Select at least 2 images.");
+
+ const imgs=await Promise.all(files.map(loadImage));
+ const direction=mergeDirection.value;
+
+ const width=direction==="horizontal"
+  ?imgs.reduce((a,i)=>a+i.width,0)
+  :Math.max(...imgs.map(i=>i.width));
+
+ const height=direction==="vertical"
+  ?imgs.reduce((a,i)=>a+i.height,0)
+  :Math.max(...imgs.map(i=>i.height));
+
+ const canvas=document.createElement("canvas");
+ canvas.width=width;
+ canvas.height=height;
+
+ const ctx=canvas.getContext("2d");
+ ctx.fillStyle="#ffffff";
+ ctx.fillRect(0,0,width,height);
+
+ let offset=0;
+
+ imgs.forEach(img=>{
+  if(direction==="vertical"){
+   ctx.drawImage(img,0,offset);
+   offset+=img.height;
+  }else{
+   ctx.drawImage(img,offset,0);
+   offset+=img.width;
+  }
+ });
+
+ const blob=await new Promise(r=>canvas.toBlob(r,"image/png"));
+ downloadBlob(blob,"merged-images.png");
+ setStatus("✅ Images merged.");
+}
+
+/* WORD TO PDF */
+
+async function wordToPDF(file){
+ if(!file.name.toLowerCase().endsWith(".docx")){
+  throw new Error("Please upload a DOCX Word file.");
+ }
+
+ const zip=await JSZip.loadAsync(file);
+ const xml=await zip.file("word/document.xml").async("string");
+
+ const doc=new DOMParser().parseFromString(xml,"text/xml");
+ const paragraphs=[...doc.getElementsByTagName("w:p")];
+
+ let text=paragraphs.map(p=>{
+  return [...p.getElementsByTagName("w:t")].map(t=>t.textContent).join("");
+ }).join("\n");
+
+ const pdf=PDFLib.PDFDocument.create();
+ const p=await pdf;
+ const page=p.addPage();
+ const font=await p.embedFont(PDFLib.StandardFonts.Helvetica);
+
+ let y=page.getHeight()-50;
+ text.split(/\r?\n/).forEach(line=>{
+  if(y<50){
+   const pg=p.addPage();
+   y=pg.getHeight()-50;
+   pg.drawText(line.substring(0,100),{x:50,y,font,size:11});
+  }else{
+   page.drawText(line.substring(0,100),{x:50,y,font,size:11});
+  }
+  y-=17;
+ });
+
+ const out=await p.save();
+ downloadBlob(new Blob([out],{type:"application/pdf"}),"word.pdf");
+ setStatus("Word text converted to PDF.");
+}
+
+/* PDF TO WORD */
+
+async function pdfToWord(file){
+ const pdf=await pdfjsLib.getDocument(await file.arrayBuffer()).promise;
+ let text="";
+
+ for(let i=1;i<=pdf.numPages;i++){
+  const page=await pdf.getPage(i);
+  const content=await page.getTextContent();
+  text+=content.items.map(x=>x.str).join(" ")+"\n\n";
+ }
+
+ const doc=new docx.Document({
+  sections:[{
+   children:text.split("\n").map(line=>
+    new docx.Paragraph({text:line})
+   )
+  }]
+ });
+
+ const blob=await docx.Packer.toBlob(doc);
+ downloadBlob(blob,"converted.docx");
+ setStatus("PDF converted to Word text.");
+}
+
+/* PDF TO POWERPOINT */
+
+async function pdfToPPT(file){
+ const pdf=await pdfjsLib.getDocument(await file.arrayBuffer()).promise;
+ const pptx=new pptxgen();
+ pptx.layout="LAYOUT_WIDE";
+
+ for(let i=1;i<=pdf.numPages;i++){
+  const page=await pdf.getPage(i);
+  const content=await page.getTextContent();
+  const text=content.items.map(x=>x.str).join(" ");
+
+  const slide=pptx.addSlide();
+  slide.background={color:"0B1120"};
+  slide.addText(text||`PDF Page ${i}`,{
+   x:0.5,y:0.5,w:12,h:6,
+   fontSize:18,color:"FFFFFF",
+   margin:0.4,breakLine:false
+  });
+ }
+
+ await pptx.writeFile({fileName:"converted.pptx"});
+ setStatus("PowerPoint created.");
+}
+
+</script>
+</body>
+</html>
